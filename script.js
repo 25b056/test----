@@ -36,7 +36,7 @@ function canCreateStar(){
   // check extra pass in inventory
   const owned = loadShop();
   const hasExtra = owned.includes('extra_star_pass');
-  const limit = 3 + (hasExtra ? 1 : 0);
+  const limit = 5 + (hasExtra ? 1 : 0);
   return used < limit;
 }
 function incrementStarCount(){
@@ -343,6 +343,14 @@ function calcVisitStreak(visits){
 // call daily XP grant on load
 grantDailyXpIfNeeded();
 
+// Initialize default gems for new users (set to 1000 if not present)
+(function ensureDefaultGems(){
+  try{
+    const cur = parseInt(localStorage.getItem(LS_GEMS) || '0',10) || 0;
+    if(cur <= 0){ localStorage.setItem(LS_GEMS, String(1000)); }
+  }catch(e){}
+})();
+
 let entries = []; // 저장된 별들
 let badges = [];
 
@@ -478,12 +486,14 @@ deleteStarBtn.addEventListener('click', ()=>{
   if(!confirm('이 별을 삭제하시겠습니까?')) return;
   const id = selectedStarEl.dataset.id;
   // DOM 제거
+  const wasOwn = selectedStarEl.classList.contains('own');
   if(selectedStarEl.parentNode) selectedStarEl.parentNode.removeChild(selectedStarEl);
   selectedStarEl = null;
   // entries에서 제거
   loadEntries();
   entries = entries.filter(en => en.id !== id);
   localStorage.setItem(LS_ENTRIES, JSON.stringify(entries));
+  // (global total counter removed in favor of daily limit)
   updateBackpackUI();
   info.classList.add('hidden');
 });
