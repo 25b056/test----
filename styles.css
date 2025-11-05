@@ -1,0 +1,74 @@
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Helvetica,Arial,sans-serif}
+body,html{height:100%}
+body{background:linear-gradient(180deg, #000000 0%, #1a002b 50%, #a24bb7 100%);color:#fff}
+.controls{position:fixed;left:16px;top:16px;z-index:50;background:rgba(255,255,255,0.04);padding:10px 12px;border-radius:8px}
+.hint{font-size:12px;margin-top:6px;opacity:0.9}
+.sky{width:100%;height:100vh;position:relative;overflow:hidden;cursor:crosshair}
+.star{position:absolute;border-radius:50%;transform:translate(-50%,-50%);pointer-events:auto}
+.star::after{content:'';position:absolute;inset:-6px;border-radius:50%;filter:blur(6px)}
+.info{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.5);z-index:60}
+.info.hidden{display:none}
+.info-card{background:#07102b;padding:18px;border-radius:10px;min-width:260px;position:relative}
+.info-card h3{margin-bottom:8px}
+.info-card p{margin-bottom:6px;color:#cfe}
+.close{position:absolute;right:8px;top:6px;background:transparent;border:0;color:#9ac;padding:6px;font-size:16px;cursor:pointer}
+/* brightness styles */
+.star.brt-1{width:8px;height:8px;background:rgba(255,255,200,0.6)}
+.star.brt-1::after{background:rgba(255,255,200,0.15)}
+.star.brt-2{width:12px;height:12px;background:rgba(255,255,220,0.85)}
+.star.brt-2::after{background:rgba(255,255,220,0.25)}
+.star.brt-3{width:18px;height:18px;background:rgba(255,250,220,1)}
+.star.brt-3::after{background:rgba(255,250,220,0.4)}
+
+/* owner styles */
+.star.own{box-shadow:0 0 8px rgba(200,240,255,0.2), 0 0 20px rgba(150,200,255,0.06) inset}
+.star.other{opacity:0.95;border:1px solid rgba(255,255,255,0.06)}
+
+/* name label */
+.label{position:absolute;left:50%;top:100%;transform:translate(-50%,8px);font-size:11px;color:#def;background:rgba(0,0,0,0.25);padding:3px 6px;border-radius:6px;pointer-events:none}
+
+/* edit modal (white background) */
+.edit-modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);z-index:70}
+.edit-modal.hidden{display:none}
+.edit-card{background:#fff;color:#111;padding:18px;border-radius:10px;min-width:300px;position:relative}
+.edit-card h3{margin-bottom:10px}
+.emoji-row{display:flex;gap:8px;margin-bottom:10px}
+.emoji-btn{background:#f3f3f3;border:1px solid #ddd;padding:8px 10px;border-radius:8px;cursor:pointer}
+.emoji-btn.selected{outline:2px solid #66f;padding:6px;border-radius:8px}
+.edit-card label{display:block;margin-bottom:8px}
+.edit-card input{width:100%;padding:8px;border-radius:6px;border:1px solid #ccc}
+.edit-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+.edit-actions button{padding:8px 12px;border-radius:6px;border:0;cursor:pointer}
+.edit-actions #saveEntry{background:#0366d6;color:#fff}
+.edit-actions #cancelEntry{background:#eee}
+.backpack-btn{margin-left:8px;padding:6px 8px;border-radius:8px;border:0;background:#2b6;color:#fff;cursor:pointer}
+.warning{color:#c33;font-size:12px;margin-bottom:8px}
+#backpackList{max-height:220px;overflow:auto}
+#badges{margin-top:8px;font-size:14px}
+.bp-item{padding:6px;border-bottom:1px solid rgba(0,0,0,0.06)}
+.small{font-size:11px;color:#667}
+
+/* star tree */
+.star-tree{position:fixed;right:16px;bottom:16px;z-index:80}
+.star-tree .tree-card{background:linear-gradient(#fff,#f7f7f7);color:#111;padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.25)}
+.star-tree.hidden{display:none}
+.star-dream{background:linear-gradient(#fff9f0,#fff1e6);border:1px solid #ffd}
+
+/* 선택된 별 강조 */
+.star.selected{outline:2px solid rgba(255,255,255,0.6);box-shadow:0 0 12px rgba(255,255,255,0.12) inset}
+.info-actions{display:flex;gap:8px;margin-top:8px}
+.info-actions button{padding:6px 8px;border-radius:6px;border:0;cursor:pointer}
+.info-actions #deleteStar{background:#c33;color:#fff}
+.info-actions #editStar{background:#2a9;color:#fff}
+
+.custom-row{margin-top:8px;display:flex;gap:8px;flex-direction:column}
+.custom-row.hidden{display:none}
+
+.info-note{position:relative;left:0;top:0;color:#ffd;font-size:12px;margin-bottom:6px}
+
+#rank{margin-top:8px;font-weight:600}
+#rankLabel{color:#ffeb3b}
+
+/* attendance */
+#attendList{max-height:220px;overflow:auto;font-size:14px}
+#markAttend{padding:8px 10px;background:#2a9;color:#fff;border:0;border-radius:6px}

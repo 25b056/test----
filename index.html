@@ -1,0 +1,139 @@
+  <!-- 별나무 UI 제거됨 -->
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Emotion Orbit (감정의 궤도)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="controls">
+    <label>기분: 
+      <select id="mood">
+        <option value="3">기쁨</option>
+        <option value="2" selected>보통</option>
+        <option value="1">슬픔</option>
+      </select>
+    </label>
+  <button id="openBackpack" class="backpack-btn">배낭</button>
+  <button id="openAttend" class="backpack-btn">출석</button>
+  <button id="openDonate" class="backpack-btn">기부</button>
+    <div class="hint">밤하늘을 클릭하면 별이 생성됩니다. 다른 사람의 별을 클릭하면 정보가 표시됩니다.
+    </div>
+  </div>
+
+  <div id="sky" class="sky" tabindex="0"></div>
+
+  <div id="info" class="info hidden">
+    <div class="info-card">
+      <button id="closeInfo" class="close">✕</button>
+      <h3 id="infoName">사용자</h3>
+  <div id="infoDates" class="small" style="margin-bottom:6px;color:#cfe"></div>
+  <div id="infoNote" class="info-note"></div>
+      <p id="infoEmoji">이모지: </p>
+      <p id="infoMsg">별 메시지</p>
+      <p id="infoBrightness">밝기: </p>
+      <div class="info-actions">
+        <button id="editStar">편집</button>
+        <button id="deleteStar">삭제</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 작성 모달: 흰 배경 -->
+  <div id="editModal" class="edit-modal hidden">
+    <div class="edit-card">
+      <button id="closeEdit" class="close">✕</button>
+      <h3>오늘의 감정</h3>
+      <div class="emoji-row">
+        <button class="emoji-btn" data-emoji="😆">😆 기쁨</button>
+        <button class="emoji-btn" data-emoji="😐">😐 보통</button>
+        <button class="emoji-btn" data-emoji="😢">😢 슬픔</button>
+        <button class="emoji-btn" data-emoji="🫥">🫥 기타</button>
+      </div>
+        <label>이름 입력 (별명 금지)
+          <input id="entryName" type="text" placeholder="실명을 쓰지 말고 다른 형태로 적어주세요" />
+        </label>
+  <div class="warning">* 별명 대신 다른 방식으로 적어주세요 (예:홍길동)</div>
+        <div id="customArea" class="custom-row hidden">
+          <label>내 감정(직접입력)
+            <input id="customEmotion" type="text" placeholder="예: 오늘은 조금 쓸쓸해" />
+          </label>
+          <label>밝기 선택
+            <select id="customBrt">
+              <option value="1">1 (슬픔)</option>
+              <option value="2" selected>2 (보통)</option>
+              <option value="3">3 (기쁨)</option>
+            </select>
+          </label>
+        </div>
+        <label>한마디
+          <input id="entryMsg" type="text" placeholder="오늘의 감정을 한마디로 적어보세요" />
+        </label>
+      <div class="edit-actions">
+        <button id="saveEntry">저장</button>
+        <button id="cancelEntry">취소</button>
+      </div>
+    </div>
+  </div>
+
+    <!-- 배낭 모달 -->
+    <div id="backpackModal" class="info hidden">
+      <div class="info-card">
+        <button id="closeBackpack" class="close">✕</button>
+        <h3>배낭</h3>
+        <div id="backpackList">(저장된 별 없음)</div>
+          <div id="badges">뱃지: <span id="badgeList">-</span></div>
+          <div id="rank">계급: <span id="rankLabel">-</span></div>
+          <div id="xpArea" style="margin-top:8px">경험치: <span id="xpCount">0</span> XP</div>
+          <div id="shopSummary" style="margin-top:8px">구매한 아이템: 없음</div>
+          <div id="diaryArea" style="margin-top:8px;margin-top:12px">
+            <!-- 다이어리 UI는 script.js에서 렌더링 -->
+          </div>
+      </div>
+    </div>
+
+    <!-- 출석 모달 -->
+    <div id="attendModal" class="info hidden">
+      <div class="info-card">
+        <button id="closeAttend" class="close">✕</button>
+        <h3>출석표</h3>
+        <div id="attendList">(오늘 출석을 눌러주세요)</div>
+        <div style="margin-top:8px"><button id="markAttend">오늘 출석</button></div>
+      </div>
+    </div>
+         <!-- 상점 버튼 및 모달 -->
+    <button id="openShop" style="position:fixed;right:12px;top:12px;z-index:60;padding:8px 10px">상점 🛒</button>
+
+    <div id="shopModal" class="info hidden">
+      <div class="info-card">
+        <button id="closeShop" class="close">✕</button>
+        <h3>상점</h3>
+        <div id="gemBalance" style="margin-bottom:8px">보유 젬: <span id="gemCount">0</span> 💎</div>
+        <div id="shopList">
+          <!-- 상품 목록은 script.js에서 채웁니다 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 기부 모달 -->
+    <div id="donateModal" class="info hidden">
+      <div class="info-card">
+        <button id="closeDonate" class="close">✕</button>
+        <h3>젬 기부하기</h3>
+        <div id="donateBalance" style="margin-bottom:6px">현재 보유 젬: <span id="donateCount">0</span> 💎</div>
+        <label>얼마나 기부하시겠습니까?
+          <input id="donateAmount" type="number" min="1" step="1" placeholder="기부할 젬 수를 입력하세요" />
+        </label>
+        <div class="small" style="color:#ffd;margin-top:6px">이 젬은 기부됩니다</div>
+        <div style="margin-top:8px;display:flex;gap:8px;justify-content:flex-end">
+          <button id="confirmDonate" style="background:#2a9;color:#fff;padding:8px 10px;border:0;border-radius:6px">기부</button>
+          <button id="cancelDonate" style="background:#eee;padding:8px 10px;border:0;border-radius:6px">취소</button>
+        </div>
+      </div>
+    </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
